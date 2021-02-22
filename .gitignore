@@ -13,5 +13,8 @@ venv
 #Log files
 *.log
 
-#Docker files
+# Docker files
 .docker
+
+# IDEA files
+.idea
