@@ -1,0 +1,43 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    container_name: django_server
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - broker
+  broker:
+    image: rabbitmq:3-management-alpine
+    container_name: broker
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  celery:
+    build: .
+    container_name: celery
+    command: celery -A wsproject worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - broker
+  celery-beat:
+    build: .
+    command: celery -A wsproject beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - broker

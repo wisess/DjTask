@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__
+*.py[cod]
+*.pyc
+*$py.class
+
+# Static files
+static
+
+# Virtual env
+venv
+
+#Log files
+*.log
+
+#Docker files
+.docker
