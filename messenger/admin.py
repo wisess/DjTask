@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Message
 
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = (
@@ -11,4 +12,4 @@ class MessageAdmin(admin.ModelAdmin):
         'created',
         'modified',
     )
-    ordering = ('created', )
+    ordering = ('created',)
