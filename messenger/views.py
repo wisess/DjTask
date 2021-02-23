@@ -15,7 +15,6 @@ class MessageApiView(views.APIView):
 
     def get(self, request, *args, **kwargs):
         """Get message by id or list messages"""
-        response_data = {}
         msg_id = request.query_params.get('id')
         if msg_id:
             msg_data = services.get_msg_by_id(msg_id)
@@ -43,8 +42,8 @@ class MessageApiView(views.APIView):
             msg_data = services.change_msg_data(msg_id, json_data)
             if not msg_data:
                 return Response("Message is not exist", status=status.HTTP_400_BAD_REQUEST)
-        serializer = self.serializer_class(msg_data)
-        response_data = serializer.data
+            serializer = self.serializer_class(msg_data)
+            response_data = serializer.data
         return Response(response_data, status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs):
