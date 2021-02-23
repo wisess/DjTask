@@ -24,7 +24,7 @@ def get_msg_by_id(msg_id):
     try:
         return Message.objects.get(id=msg_id)
     except models.ObjectDoesNotExist:
-        return False
+        return None
 
 
 def msg_is_send_mark(msg_id):

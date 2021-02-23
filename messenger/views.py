@@ -1,4 +1,4 @@
-from rest_framework import views, permissions, status
+from rest_framework import views, status
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -8,7 +8,6 @@ from .serializers import MessageCreateSerializer, MessageSerializer
 
 
 class MessageApiView(views.APIView):
-    permission_classes = (permissions.AllowAny,)
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     serializer_class = MessageSerializer
@@ -46,7 +45,8 @@ class MessageApiView(views.APIView):
             response_data = serializer.data
         return Response(response_data, status=status.HTTP_200_OK)
 
-    def delete(self, request, *args, **kwargs):
+    @staticmethod
+    def delete(request, *args, **kwargs):
         """Delete message by id"""
         msg_id = request.query_params.get('id')
         if msg_id:
@@ -57,12 +57,12 @@ class MessageApiView(views.APIView):
 
 
 class MessageCreateApiView(views.APIView):
-    permission_classes = (permissions.AllowAny,)
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     throttle_scope = 'create'
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         """Create message"""
         serializer = MessageCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
