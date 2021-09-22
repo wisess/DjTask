@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 from celery.schedules import crontab
 
@@ -140,8 +140,8 @@ STATIC_URL = '/static/'
 CELERY_BROKER_URL = 'amqp://guest:guest@broker:5672//'
 
 CELERY_BEAT_SCHEDULE = {
-    # 'send_msg_to_ext_system': {
-    #     'task': 'messenger.tasks.send_msg_to_ext_system',
-    #     'schedule': crontab()  # execute every minute
-    # }
+    'send_msg_to_ext_system': {
+        'task': 'messenger.tasks.get_symbol_data',
+        'schedule': timedelta(seconds=1)
+    }
 }
